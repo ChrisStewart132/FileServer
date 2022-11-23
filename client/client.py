@@ -10,7 +10,7 @@ TIMEOUT = 15
 ARGUEMENTS = sys.argv[1:]
 if len(ARGUEMENTS) != 3:
     print("invalid arguements given, enter arguements in the form below")
-    print("hostname/IP address port_number(1024-64000) filename")
+    print("SERVER_ADDRESS SERVER_PORT(1024-64000) FILENAME")
     sys.exit()
 
 class Client():
@@ -37,14 +37,14 @@ class Client():
             except:
                 print("invalid server address. ")
                 self.close()
-        print(self.server_address)
+        #print(self.server_address)
 
     def init_port_number(self, port_number):
         port_number = int(port_number)
         if self.port_range[1] >= port_number >= self.port_range[0]:
             self.port_number = port_number
             return
-        print("port number:", port_number, "out of range", self.port_range)
+        #print("port number:", port_number, "out of range", self.port_range)
         self.close()
 
     def init_filename(self, filename):
@@ -76,7 +76,7 @@ class Client():
             print('filename too large (> 1024 bytes)')
             self.close()
         filename_length = len(filename).to_bytes(2, 'big')
-        print("created file request:", magic_number,type_code,filename_length,filename)
+        #print("created file request:", magic_number,type_code,filename_length,filename)
         return bytearray(magic_number + type_code + filename_length + filename)
 
     def send_file_request(self, file_request):
@@ -100,7 +100,7 @@ class Client():
             print('server could not access file')
             return
         data_length = int.from_bytes(header[4:8], 'big')
-        print("file response decoded:", magic_number, type_code, status_code, data_length)
+        #print("file response decoded:", magic_number, type_code, status_code, data_length)
         
         try:
             self.file = open(self.filename, 'wb')
@@ -120,7 +120,7 @@ class Client():
         except:
             print('socket.timeout: timed out')
             return
-        #print(self.filename, f"created, {data_written} bytes")
+        print(self.filename, f"received, {data_written} bytes")
 
 
     def __init__(self, address, port, filename):

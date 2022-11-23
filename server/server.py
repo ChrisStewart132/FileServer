@@ -8,7 +8,7 @@ TIMEOUT = 5
 
 ARGUEMENTS = sys.argv[1:]
 if len(ARGUEMENTS) != 1:
-    print("invalid arguements given, enter a port number.")
+    print("invalid arguements given, enter a port number argument.")
     sys.exit()
     
 class Server():
